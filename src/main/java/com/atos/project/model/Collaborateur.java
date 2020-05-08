@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class Collaborateur {
     @Id
-    @Column(name="Id", unique = true)
+    @Column(name="Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
@@ -39,13 +40,13 @@ public class Collaborateur {
     @JoinTable(name = "collaborateur_competence",
             joinColumns = @JoinColumn(name = "id_clb"),
             inverseJoinColumns = @JoinColumn(name = "id_exp"))
-    private List<Experience> experiences;
+    private Set<Experience> exp = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "collaborateur_competence",
             joinColumns = @JoinColumn(name = "id_clb"),
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
-    private List<Competence> competences;
+    private Set<Competence> competences = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="id_bsn")
@@ -112,21 +113,19 @@ public class Collaborateur {
         this.agence = agence;
     }
 
-    public List<Experience> getExperiences() {
-        return experiences;
+    public Set<Experience> getExp() {
+        return exp;
     }
 
-    public void setExperiences(List<Experience> experiences) {
-        this.experiences = experiences;
-
+    public void setExp(Set<Experience> exp) {
+        this.exp = exp;
     }
 
-
-    public List<Competence> getCompetences() {
+    public Set<Competence> getCompetences() {
         return competences;
     }
 
-    public void setCompetences(List<Competence> competences) {
+    public void setCompetences(Set<Competence> competences) {
         this.competences = competences;
     }
 }

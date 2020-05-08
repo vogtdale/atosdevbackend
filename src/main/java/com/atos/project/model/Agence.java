@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @EntityListeners(AuditingEntityListener.class)
 public class Agence {
 
-    @Column(name = "ID", unique = true)
+    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

@@ -1,5 +1,6 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class ContactClient {
     @Id
-    @Column(name="Id",unique = true)
+    @Column(name="Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
@@ -42,10 +43,13 @@ public class ContactClient {
     @Size(max = 100)
     private String fax;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="id_site")
     private Site site;
 
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "contact_competence",
             joinColumns = @JoinColumn(name = "id_ctc"),
@@ -135,4 +139,5 @@ public class ContactClient {
     public void setCompetences(List<Competence> competences) {
         this.competences = competences;
     }
+
 }

@@ -1,10 +1,12 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,7 +15,7 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class Competence {
 
-    @Column(name = "Id", unique = true)
+    @Column(name = "Id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -23,11 +25,16 @@ public class Competence {
     private String lib;
 
 
+    @ManyToMany(mappedBy = "competences")
+    private Set<Collaborateur> colb = new HashSet<>();
+
+    @ManyToMany(mappedBy = "comp")
+    private Set<Besoin> bsn = new HashSet<>();
+
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="id_tcp")
     private TypeCompetence typeCompetence;
-
 
     public Competence() {}
 
@@ -60,7 +67,21 @@ public class Competence {
         this.typeCompetence = typeCompetence;
     }
 
+    public Set<Collaborateur> getColb() {
+        return colb;
+    }
 
+    public void setColb(Set<Collaborateur> colb) {
+        this.colb = colb;
+    }
+
+    public Set<Besoin> getBsn() {
+        return bsn;
+    }
+
+    public void setBsn(Set<Besoin> bsn) {
+        this.bsn = bsn;
+    }
 
 
 }

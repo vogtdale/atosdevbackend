@@ -1,6 +1,7 @@
 package com.atos.project.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -8,14 +9,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Besoin")
 @EntityListeners(AuditingEntityListener.class)
 public class Besoin {
 
-    @Column(name = "Id", unique = true)
+    @Column(name = "Id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -40,20 +43,24 @@ public class Besoin {
     @Size(max = 1000)
     private String remarque;
 
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "besoin_competence",
             joinColumns = @JoinColumn(name = "id_bsn"),
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
-    private List<Competence> competences;
+    private Set<Competence> comp = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="id_site")
     private Site site;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="id_ctc")
     private ContactClient contactClient;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="id_usr")
     private User user;
@@ -117,12 +124,12 @@ public class Besoin {
         this.remarque = remarque;
     }
 
-    public List<Competence> getCompetences() {
-        return competences;
+    public Set<Competence> getCompetences() {
+        return comp;
     }
 
-    public void setCompetences(List<Competence> competences) {
-        this.competences = competences;
+    public void setCompetences(Set<Competence> competences) {
+        this.comp = competences;
     }
 
     public Site getSite() {

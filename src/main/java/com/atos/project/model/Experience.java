@@ -1,17 +1,20 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Experience")
 @EntityListeners(AuditingEntityListener.class)
 public class Experience {
 
-    @Column(name = "id", unique = true)
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -19,6 +22,10 @@ public class Experience {
     @Column(name="lib")
     @Size(max = 11)
     private String lib;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "exp")
+    private Set<Collaborateur> colb = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "besoin_competence",
@@ -57,5 +64,11 @@ public class Experience {
         this.besoins = besoins;
     }
 
+    public Set<Collaborateur> getColb() {
+        return colb;
+    }
 
+    public void setColb(Set<Collaborateur> colb) {
+        this.colb = colb;
+    }
 }

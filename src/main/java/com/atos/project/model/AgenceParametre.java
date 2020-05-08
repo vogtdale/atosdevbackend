@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 public class AgenceParametre {
 
     @Id
-    @Column(name="Id", unique = true)
+    @Column(name="Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
@@ -24,6 +24,7 @@ public class AgenceParametre {
 
     private String logo;
 
+    public AgenceParametre() {}
     public AgenceParametre(Integer id, String nom, String logo) {
         this.id = id;
         this.nom = nom;

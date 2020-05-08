@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Repository
 @CrossOrigin
+@RestController
 public class ExperienceController {
     
     ExperienceService experienceService;

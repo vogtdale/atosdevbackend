@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 public class Site {
 
     @Id
-    @Column(name="Id", unique = true)
+    @Column(name="Id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
@@ -124,4 +124,6 @@ public class Site {
     public void setVille(String ville) {
         this.ville = ville;
     }
+
+
 }

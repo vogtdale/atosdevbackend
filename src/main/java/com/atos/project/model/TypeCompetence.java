@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @EntityListeners(AuditingEntityListener.class)
 public class TypeCompetence {
 
-    @Column(name = "id",unique = true)
+    @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

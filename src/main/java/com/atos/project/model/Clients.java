@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(	name = "clients")
 @EntityListeners(AuditingEntityListener.class)
 public class Clients {
-    @Column(name = "ID",updatable = false, nullable = false, unique = true)
+    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

@@ -12,7 +12,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Proposition {
 
-    @Column(name = "ID", unique = true)
+    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
