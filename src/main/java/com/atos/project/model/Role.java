@@ -1,6 +1,10 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -12,6 +16,10 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ERole name;
+
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> usr = new HashSet<>();
 
     public Role() {
 
@@ -35,5 +43,13 @@ public class Role {
 
     public void setName(ERole name) {
         this.name = name;
+    }
+
+    public Set<User> getUsr() {
+        return usr;
+    }
+
+    public void setUsr(Set<User> usr) {
+        this.usr = usr;
     }
 }

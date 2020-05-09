@@ -45,25 +45,35 @@ public class Besoin {
 
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinTable(name = "besoin_competence",
             joinColumns = @JoinColumn(name = "id_bsn"),
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
     private Set<Competence> comp = new HashSet<>();
 
+    @ManyToMany(mappedBy = "besoins")
     @JsonIgnore
+    private Set<Experience> exp = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name="id_site")
     private Site site;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name="id_ctc")
     private ContactClient contactClient;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name="id_usr")
     private User user;
+
+    @OneToMany(mappedBy = "besoinListe")
+    @JsonIgnore
+    private Set<Proposition> prop = new HashSet<>();
 
     public Besoin() {}
 
@@ -155,4 +165,30 @@ public class Besoin {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public Set<Competence> getComp() {
+        return comp;
+    }
+
+    public void setComp(Set<Competence> comp) {
+        this.comp = comp;
+    }
+
+    public Set<Experience> getExp() {
+        return exp;
+    }
+
+    public void setExp(Set<Experience> exp) {
+        this.exp = exp;
+    }
+
+    public Set<Proposition> getProp() {
+        return prop;
+    }
+
+    public void setProp(Set<Proposition> prop) {
+        this.prop = prop;
+    }
+
+
 }

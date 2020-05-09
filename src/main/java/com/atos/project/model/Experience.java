@@ -23,11 +23,14 @@ public class Experience {
     @Size(max = 11)
     private String lib;
 
-    @JsonIgnore
+
+
     @ManyToMany(mappedBy = "exp")
+    @JsonIgnore
     private Set<Collaborateur> colb = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinTable(name = "besoin_competence",
             joinColumns = @JoinColumn(name = "id_exp"),
             inverseJoinColumns = @JoinColumn(name = "id_bsn"))

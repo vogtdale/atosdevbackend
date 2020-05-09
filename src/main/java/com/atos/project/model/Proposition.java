@@ -1,5 +1,6 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -29,14 +30,17 @@ public class Proposition {
     @Column(name="ts", nullable = false, updatable = false, insertable = false)
     private Date ts;
 
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name="id_bsn")
     private Besoin besoinListe;
 
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name="id_clb")
     private Collaborateur collaborateurList;
-
 
     public Proposition() {}
 

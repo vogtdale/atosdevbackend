@@ -1,5 +1,6 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -37,20 +38,29 @@ public class Collaborateur {
     private String tel;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinTable(name = "collaborateur_competence",
             joinColumns = @JoinColumn(name = "id_clb"),
             inverseJoinColumns = @JoinColumn(name = "id_exp"))
     private Set<Experience> exp = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinTable(name = "collaborateur_competence",
             joinColumns = @JoinColumn(name = "id_clb"),
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
     private Set<Competence> competences = new HashSet<>();
 
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name="id_bsn")
     private Agence agence;
+
+
+    @OneToMany(mappedBy = "collaborateurList")
+    @JsonIgnore
+    private Set<Proposition> props = new HashSet<>();
 
 
     public Collaborateur() {}
@@ -127,5 +137,13 @@ public class Collaborateur {
 
     public void setCompetences(Set<Competence> competences) {
         this.competences = competences;
+    }
+
+    public Set<Proposition> getProps() {
+        return props;
+    }
+
+    public void setProps(Set<Proposition> props) {
+        this.props = props;
     }
 }

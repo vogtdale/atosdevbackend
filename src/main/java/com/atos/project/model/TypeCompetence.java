@@ -1,9 +1,12 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="type_competence")
@@ -19,9 +22,14 @@ public class TypeCompetence {
     @Size(max = 100)
     private String lib;
 
+
+    @OneToMany(mappedBy = "typeCompetence")
+    @JsonIgnore
+    private Set<Competence> cpc = new HashSet<>();
+
     public TypeCompetence() {}
 
-    public TypeCompetence(Integer id, @Size(max = 100) String lib) {
+    public TypeCompetence(Integer id, String lib) {
         this.id = id;
         this.lib = lib;
     }
@@ -40,5 +48,13 @@ public class TypeCompetence {
 
     public void setLib(String lib) {
         this.lib = lib;
+    }
+
+    public Set<Competence> getCpc() {
+        return cpc;
+    }
+
+    public void setCpc(Set<Competence> cpc) {
+        this.cpc = cpc;
     }
 }

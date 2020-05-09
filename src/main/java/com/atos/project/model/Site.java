@@ -1,11 +1,14 @@
 package com.atos.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -43,10 +46,20 @@ public class Site {
     @Size(max = 100)
     private String fax;
 
-
     @Size(max = 100)
     @Column(name ="ville")
     private String ville;
+
+
+    @OneToMany(mappedBy = "site")
+    @JsonIgnore
+    private Set<Besoin> besoin = new HashSet<>();
+
+
+    @OneToMany(mappedBy = "site")
+    @JsonIgnore
+    private Set<ContactClient> ctc = new HashSet<>();
+
 
     public Site() {}
 
@@ -125,5 +138,19 @@ public class Site {
         this.ville = ville;
     }
 
+    public Set<Besoin> getBesoin() {
+        return besoin;
+    }
 
+    public void setBesoin(Set<Besoin> besoin) {
+        this.besoin = besoin;
+    }
+
+    public Set<ContactClient> getCtc() {
+        return ctc;
+    }
+
+    public void setCtc(Set<ContactClient> ctc) {
+        this.ctc = ctc;
+    }
 }

@@ -21,6 +21,7 @@ public class StatutProposition {
     @Size(max=11)
     private int ordr;
 
+    public StatutProposition() {}
     public StatutProposition(Integer id, String lib, int ordr) {
         this.id = id;
         this.lib = lib;

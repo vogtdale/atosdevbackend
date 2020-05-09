@@ -25,14 +25,23 @@ public class Competence {
     private String lib;
 
 
+
     @ManyToMany(mappedBy = "competences")
+    @JsonIgnore
     private Set<Collaborateur> colb = new HashSet<>();
 
+
     @ManyToMany(mappedBy = "comp")
+    @JsonIgnore
     private Set<Besoin> bsn = new HashSet<>();
 
 
+    @ManyToMany(mappedBy = "competences")
+    @JsonIgnore
+    private Set<ContactClient> ctc = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name="id_tcp")
     private TypeCompetence typeCompetence;
 
@@ -83,5 +92,11 @@ public class Competence {
         this.bsn = bsn;
     }
 
+    public Set<ContactClient> getCtc() {
+        return ctc;
+    }
 
+    public void setCtc(Set<ContactClient> ctc) {
+        this.ctc = ctc;
+    }
 }
