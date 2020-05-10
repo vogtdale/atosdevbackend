@@ -6,9 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtUtils {
@@ -20,16 +25,38 @@ public class JwtUtils {
     @Value("${atos.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
+    //Retourne le corp du token
+    public Claims extractionDuCorpDuToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
+    //Retourne vrai si le token n'a pas dépassé la date d'expiration
+    private Boolean tokenNonDepasseDateExpiration(String token) {
+        return extractionDuCorpDuToken(token)
+                .getExpiration()
+                .before(new Date());
+    }
+
+    public String generateJwtToken(UserDetails userDetails) {
+
+        Map<String, Object> tokenData = new HashMap<>();
+
+        //ici vous pouvez rajouter tout ce que vous voulez pas obligatoire
+        tokenData.put("roles", userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(",")));
 
         return Jwts.builder()
-                .setSubject((userPrincipal.getUsername()))
-                .setIssuedAt(new Date())
+                .setClaims(tokenData)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                .compact();
+                .signWith(SignatureAlgorithm.HS256, jwtSecret).compact();
+
+
     }
 
     public String getUserNameFromJwtToken(String token) {
