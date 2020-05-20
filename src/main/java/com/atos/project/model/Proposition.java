@@ -1,6 +1,8 @@
 package com.atos.project.model;
 
+import com.atos.project.view.MyJsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -13,91 +15,47 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 public class Proposition {
 
-    @Column(name = "ID")
+    @Column(name = "id_pro")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
-    @Column(name="d_prop")
+    @ManyToOne
+    @JoinColumn(name="idBsn")
+    private Besoin besoin;
+
+    @Column(name="d_pro")
     @Temporal(TemporalType.DATE)
-    private Date d_prop;
+    private Date d_pro;
+
+    @ManyToOne
+    @JoinColumn(name = "idClb")
+    private Collaborateur collaborateur;
+
+    @Column
+    private float prixAchat;
+
+    @Column
+    private float prixVente;
+
+    private float marge;
 
     @Column(name="d_relance")
     @Temporal(TemporalType.DATE)
     private Date d_relance;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private User user;
+
     @CreationTimestamp
     @Column(name="ts", nullable = false, updatable = false, insertable = false)
     private Date ts;
 
+    @ManyToOne
+    @JoinColumn(name = "idSpr")
+    private StatutProposition statut_prop;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_bsn")
-    private Besoin besoinListe;
-
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_clb")
-    private Collaborateur collaborateurList;
-
-    public Proposition() {}
-
-    public Proposition(Integer id, Date d_prop, Date d_relance, Date ts) {
-        this.id = id;
-        this.d_prop = d_prop;
-        this.d_relance = d_relance;
-        this.ts = ts;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getD_prop() {
-        return d_prop;
-    }
-
-    public void setD_prop(Date d_prop) {
-        this.d_prop = d_prop;
-    }
-
-    public Date getD_relance() {
-        return d_relance;
-    }
-
-    public void setD_relance(Date d_relance) {
-        this.d_relance = d_relance;
-    }
-
-    public Date getTs() {
-        return ts;
-    }
-
-    public void setTs(Date ts) {
-        this.ts = ts;
-    }
-
-    public Besoin getBesoinListe() {
-        return besoinListe;
-    }
-
-    public void setBesoinListe(Besoin besoinListe) {
-        this.besoinListe = besoinListe;
-    }
-
-    public Collaborateur getCollaborateurList() {
-        return collaborateurList;
-    }
-
-    public void setCollaborateurList(Collaborateur collaborateurList) {
-        this.collaborateurList = collaborateurList;
-    }
 
 
 }

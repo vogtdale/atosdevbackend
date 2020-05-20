@@ -19,12 +19,12 @@ public class SiteController {
     /*******************************************************
      *                      List of Site
      *******************************************************/
-    @GetMapping("/sites")
+    @GetMapping("/site")
     public List<Site> showSite() {
         return this.siteService.findAll();
     }
 
-    @GetMapping("/sites/{id}")
+    @GetMapping("/site/{id}")
     public Site getsite(@PathVariable int id) {
         return (Site) this.siteService.findById(id);
     }
@@ -33,7 +33,7 @@ public class SiteController {
     /*******************************************************
      *                     Add Site
      *******************************************************/
-    @PutMapping("/addSite")
+    @PutMapping("/addSit")
     public Site addSite(@RequestBody Site sites) {
         return this.siteService.save(sites);
     }
@@ -42,7 +42,7 @@ public class SiteController {
      *                      Delete Site
      *******************************************************/
 
-    @DeleteMapping("/sites/{id}")
+    @DeleteMapping("/delSit/{id}")
     public void delete(@PathVariable int id) {
         this.siteService.delete(id);
     }

@@ -22,12 +22,12 @@ public class ExperienceController {
     /*******************************************************
      *                      List of Experience
      *******************************************************/
-    @GetMapping("/experience")
+    @GetMapping("/exp")
     public List<Experience> showExperience() {
         return this.experienceService.findAll();
     }
 
-    @GetMapping("/experience/{id}")
+    @GetMapping("/exp/{id}")
     public Experience getExp(@PathVariable int id) {
         return (Experience) this.experienceService.findById(id);
     }
@@ -36,7 +36,7 @@ public class ExperienceController {
     /*******************************************************
      *                     Add Experience
      *******************************************************/
-    @PutMapping("/addExperience")
+    @PutMapping("/addexp")
     public Experience addexp(@RequestBody Experience experience) {
         return this.experienceService.save(experience);
     }
@@ -45,7 +45,7 @@ public class ExperienceController {
      *                      Delete Experience
      *******************************************************/
 
-    @DeleteMapping("/experience/{id}")
+    @DeleteMapping("/delexp/{id}")
     public void delete(@PathVariable int id) {
         this.experienceService.delete(id);
     }
