@@ -44,8 +44,8 @@ public class User {
 
 
 
-    @OneToMany(mappedBy = "user")
-    private Set<Besoin> bsn = new HashSet<>();
+//    @OneToMany(mappedBy = "user")
+//    private Set<Besoin> bsn = new HashSet<>();
 
     public User() {
     }
@@ -96,11 +96,4 @@ public class User {
         this.roles = roles;
     }
 
-    public Set<Besoin> getBsn() {
-        return bsn;
-    }
-
-    public void setBsn(Set<Besoin> bsn) {
-        this.bsn = bsn;
-    }
 }

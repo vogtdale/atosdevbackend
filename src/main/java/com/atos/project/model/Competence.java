@@ -1,6 +1,8 @@
 package com.atos.project.model;
 
+import com.atos.project.view.MyJsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -11,53 +13,35 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="Competence")
+@Table(name = "competence")
 @EntityListeners(AuditingEntityListener.class)
 public class Competence {
-
-    @Column(name = "Id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Column(name="lib")
-    @Size(max=100)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Contact.class})
+    private int idCpc;
+    @Column(unique = true)
+    @JsonView({MyJsonView.Collaborateur.class, MyJsonView.CollaborateurCompetence.class,MyJsonView.Contact.class})
     private String lib;
-
-
-
-    @ManyToMany(mappedBy = "competences")
-    @JsonIgnore
-    private Set<Collaborateur> colb = new HashSet<>();
-
-
-    @ManyToMany(mappedBy = "comp")
-    @JsonIgnore
-    private Set<Besoin> bsn = new HashSet<>();
-
-
-    @ManyToMany(mappedBy = "competences")
-    @JsonIgnore
-    private Set<ContactClient> ctc = new HashSet<>();
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_tcp")
+    @ManyToOne
+    @JoinColumn(name = "idTcp")
     private TypeCompetence typeCompetence;
 
-    public Competence() {}
+    @ManyToMany(mappedBy = "listeCompetence")
+    Set<ContactClient> listeContactClient;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "contact_competence",
+//            joinColumns = @JoinColumn(name = "id_cpc"),
+//            inverseJoinColumns = @JoinColumn(name = "id_ctc"))
+//    Set<ContactClient> listeContactClient;
 
-    public Competence(Integer id, String lib) {
-        this.id = id;
-        this.lib = lib;
+    public int getIdCpc() {
+        return idCpc;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdCpc(int idCpc) {
+        this.idCpc = idCpc;
     }
 
     public String getLib() {
@@ -76,27 +60,11 @@ public class Competence {
         this.typeCompetence = typeCompetence;
     }
 
-    public Set<Collaborateur> getColb() {
-        return colb;
+    public Set<ContactClient> getListeContactClient() {
+        return listeContactClient;
     }
 
-    public void setColb(Set<Collaborateur> colb) {
-        this.colb = colb;
-    }
-
-    public Set<Besoin> getBsn() {
-        return bsn;
-    }
-
-    public void setBsn(Set<Besoin> bsn) {
-        this.bsn = bsn;
-    }
-
-    public Set<ContactClient> getCtc() {
-        return ctc;
-    }
-
-    public void setCtc(Set<ContactClient> ctc) {
-        this.ctc = ctc;
+    public void setListeContactClient(Set<ContactClient> listeContactClient) {
+        this.listeContactClient = listeContactClient;
     }
 }

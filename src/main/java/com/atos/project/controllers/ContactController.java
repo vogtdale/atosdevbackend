@@ -2,6 +2,8 @@ package com.atos.project.controllers;
 
 import com.atos.project.model.ContactClient;
 import com.atos.project.security.services.ContactService;
+import com.atos.project.view.MyJsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +23,14 @@ public class ContactController {
     /*******************************************************
      *                      List of ContactClient
      *******************************************************/
-    @GetMapping("/contacts")
+    @GetMapping("/ctc")
+    @JsonView(MyJsonView.Contact.class)
     public List<ContactClient> showContactClient() {
         return this.contactService.findAll();
     }
 
-    @GetMapping("/contacts/{id}")
+    @GetMapping("/ctc/{id}")
+    @JsonView(MyJsonView.Contact.class)
     public ContactClient getcontact(@PathVariable int id) {
         return (ContactClient) this.contactService.findById(id);
     }
@@ -35,7 +39,7 @@ public class ContactController {
     /*******************************************************
      *                     Add ContactClient
      *******************************************************/
-    @PutMapping("/addContactClient")
+    @PutMapping("/addCtc")
     public ContactClient addContact(@RequestBody ContactClient contacts) {
         return this.contactService.save(contacts);
     }
@@ -44,7 +48,7 @@ public class ContactController {
      *                      Delete ContactClient
      *******************************************************/
 
-    @DeleteMapping("/contacts/{id}")
+    @DeleteMapping("/delCtc/{id}")
     public void delete(@PathVariable int id) {
         this.contactService.delete(id);
     }

@@ -1,6 +1,8 @@
 package com.atos.project.model;
 
+import com.atos.project.view.MyJsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,68 +14,57 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="Contact_Client")
+@Table(name="contact_client")
 @EntityListeners(AuditingEntityListener.class)
 
 public class ContactClient {
     @Id
-    @Column(name="Id")
+    @Column(name="id_ctc")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView(MyJsonView.Contact.class)
     private Integer id;
 
-    @NotBlank
     @Size(max = 100)
+    @JsonView(MyJsonView.Contact.class)
     private String nom;
 
-    @NotBlank
     @Size(max = 100)
+    @JsonView(MyJsonView.Contact.class)
     private String prenom;
 
-    @NotBlank
     @Size(max = 100)
+    @JsonView(MyJsonView.Contact.class)
     private String poste;
 
-    @NotBlank
     @Size(max = 100)
     @Email
+    @JsonView(MyJsonView.Contact.class)
     private String email;
 
-    @NotBlank
     @Size(max = 100)
-    private String tel;
+    @JsonView(MyJsonView.Contact.class)
+    private String tel1;
 
     @Size(max = 100)
+    @JsonView(MyJsonView.Contact.class)
+    private String tel2;
+
+    @Size(max = 100)
+    @JsonView(MyJsonView.Contact.class)
     private String fax;
 
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_site")
+    @ManyToOne  //(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="id_sit")
+    @JsonView(MyJsonView.Contact.class)
     private Site site;
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
-
-    @JoinTable(name = "contact_competence",
+    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinTable(
+            name = "contact_competence",
             joinColumns = @JoinColumn(name = "id_ctc"),
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
-    private Set<Competence> competences = new HashSet<>();
-
-
-    @OneToMany(mappedBy = "contactClient")
-    private Set<Besoin> bsn = new HashSet<>();
-
-    public ContactClient() {}
-
-    public ContactClient(Integer id, String nom, String prenom, String poste, String email, String tel, String fax) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.poste = poste;
-        this.email = email;
-        this.tel = tel;
-        this.fax = fax;
-    }
+    @JsonView(MyJsonView.Contact.class)
+    Set<Competence> listeCompetence;
 
     public Integer getId() {
         return id;
@@ -115,12 +106,20 @@ public class ContactClient {
         this.email = email;
     }
 
-    public String getTel() {
-        return tel;
+    public String getTel1() {
+        return tel1;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setTel1(String tel1) {
+        this.tel1 = tel1;
+    }
+
+    public String getTel2() {
+        return tel2;
+    }
+
+    public void setTel2(String tel2) {
+        this.tel2 = tel2;
     }
 
     public String getFax() {
@@ -139,21 +138,11 @@ public class ContactClient {
         this.site = site;
     }
 
-    public Set<Competence> getCompetences() {
-        return competences;
+    public Set<Competence> getListeCompetence() {
+        return listeCompetence;
     }
 
-    public void setCompetences(Set<Competence> competences) {
-        this.competences = competences;
+    public void setListeCompetence(Set<Competence> listeCompetence) {
+        this.listeCompetence = listeCompetence;
     }
-
-    public Set<Besoin> getBsn() {
-        return bsn;
-    }
-
-    public void setBsn(Set<Besoin> bsn) {
-        this.bsn = bsn;
-    }
-
-
 }
