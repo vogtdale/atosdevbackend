@@ -36,7 +36,7 @@ public class Besoin {
     Date d_echeance;
 
     @CreationTimestamp
-    @Column(name="ts", nullable = false, updatable = false, insertable = false)
+    @Column(name="ts")
     private Date ts;
 
     @Column(name="remarque")
@@ -51,27 +51,27 @@ public class Besoin {
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
     private Set<Competence> comp = new HashSet<>();
 
-    @ManyToMany(mappedBy = "besoins")
+    @ManyToMany(mappedBy = "besoins",fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Experience> exp = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JsonIgnore
     @JoinColumn(name="id_site")
     private Site site;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JsonIgnore
     @JoinColumn(name="id_ctc")
     private ContactClient contactClient;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JsonIgnore
     @JoinColumn(name="id_usr")
     private User user;
 
-    @OneToMany(mappedBy = "besoinListe")
+    @OneToMany(mappedBy = "besoinListe", fetch = FetchType.LAZY )
     @JsonIgnore
     private Set<Proposition> prop = new HashSet<>();
 
@@ -189,6 +189,4 @@ public class Besoin {
     public void setProp(Set<Proposition> prop) {
         this.prop = prop;
     }
-
-
 }

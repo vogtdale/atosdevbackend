@@ -57,7 +57,6 @@ public class Site {
 
 
     @OneToMany(mappedBy = "site")
-    @JsonIgnore
     private Set<ContactClient> ctc = new HashSet<>();
 
 

@@ -53,7 +53,7 @@ public class ContactClient {
 
 
     @ManyToMany(fetch = FetchType.LAZY)
-
+    @JsonIgnore
     @JoinTable(name = "contact_competence",
             joinColumns = @JoinColumn(name = "id_ctc"),
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
