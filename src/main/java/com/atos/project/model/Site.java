@@ -1,6 +1,8 @@
 package com.atos.project.model;
 
+import com.atos.project.view.MyJsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -12,73 +14,50 @@ import java.util.Set;
 
 
 @Entity
-@Table(name="Site")
+@Table(name="site")
 @EntityListeners(AuditingEntityListener.class)
 public class Site {
-
     @Id
-    @Column(name="Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+//    @Column(name="id_sit")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @JsonView(MyJsonView.Contact.class)
+    private Integer idSit;
 
 
     @Size(max = 100)
+    @JsonView(MyJsonView.Contact.class)
     private String lib;
 
-    @NotBlank
     @Size(max = 100)
     private String adr;
 
-
     @Size(max = 100)
     @Column(name ="code_postal")
-    private String codepostale;
+    private String codePostal;
 
-    @NotBlank
     @Size(max = 100)
     @Email
     private String email;
 
-    @NotBlank
     @Size(max = 100)
-    private String tel;
+    private String tel1;
+
+    @Size(max = 100)
+    private String tel2;
 
     @Size(max = 100)
     private String fax;
 
     @Size(max = 100)
-    @Column(name ="ville")
+    @JsonView(MyJsonView.Contact.class)
     private String ville;
 
-
-    @OneToMany(mappedBy = "site")
-    @JsonIgnore
-    private Set<Besoin> besoin = new HashSet<>();
-
-
-    @OneToMany(mappedBy = "site")
-    private Set<ContactClient> ctc = new HashSet<>();
-
-
-    public Site() {}
-
-    public Site(Integer id, String lib, String adr, String codepostale, String email, String tel, String fax, String ville) {
-        this.id = id;
-        this.lib = lib;
-        this.adr = adr;
-        this.codepostale = codepostale;
-        this.email = email;
-        this.tel = tel;
-        this.fax = fax;
-        this.ville = ville;
+    public Integer getIdSit() {
+        return idSit;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdSit(Integer idSit) {
+        this.idSit = idSit;
     }
 
     public String getLib() {
@@ -97,12 +76,12 @@ public class Site {
         this.adr = adr;
     }
 
-    public String getCodepostale() {
-        return codepostale;
+    public String getCodePostal() {
+        return codePostal;
     }
 
-    public void setCodepostale(String codepostale) {
-        this.codepostale = codepostale;
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
     }
 
     public String getEmail() {
@@ -113,12 +92,20 @@ public class Site {
         this.email = email;
     }
 
-    public String getTel() {
-        return tel;
+    public String getTel1() {
+        return tel1;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setTel1(String tel1) {
+        this.tel1 = tel1;
+    }
+
+    public String getTel2() {
+        return tel2;
+    }
+
+    public void setTel2(String tel2) {
+        this.tel2 = tel2;
     }
 
     public String getFax() {
@@ -135,21 +122,5 @@ public class Site {
 
     public void setVille(String ville) {
         this.ville = ville;
-    }
-
-    public Set<Besoin> getBesoin() {
-        return besoin;
-    }
-
-    public void setBesoin(Set<Besoin> besoin) {
-        this.besoin = besoin;
-    }
-
-    public Set<ContactClient> getCtc() {
-        return ctc;
-    }
-
-    public void setCtc(Set<ContactClient> ctc) {
-        this.ctc = ctc;
     }
 }

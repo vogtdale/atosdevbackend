@@ -1,61 +1,32 @@
 package com.atos.project.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.atos.project.view.MyJsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Entity
-@Table(name="Agence")
+@Table(name="agence")
 @EntityListeners(AuditingEntityListener.class)
 public class Agence {
-
-    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-
-    @Size(max = 100)
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    private int idAgc;
+    @Column(unique = true)
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private String lib;
 
-
-    @OneToMany(mappedBy = "agence")
-    @JsonIgnore
-    private Set<Collaborateur> clb = new HashSet<>();
-
-    public Agence() {}
-
-    public Agence(Integer id, String lib) {
-        this.id = id;
-        this.lib = lib;
-    }
-
     public Integer getId() {
-        return id;
+        return idAgc;
     }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    public void setId(Integer id) { this.idAgc = idAgc; }
     public String getLib() {
         return lib;
     }
-
     public void setLib(String lib) {
         this.lib = lib;
     }
 
-    public Set<Collaborateur> getClb() {
-        return clb;
-    }
-
-    public void setClb(Set<Collaborateur> clb) {
-        this.clb = clb;
-    }
 }

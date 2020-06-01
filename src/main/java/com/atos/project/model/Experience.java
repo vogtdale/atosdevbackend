@@ -1,6 +1,8 @@
 package com.atos.project.model;
 
+import com.atos.project.view.MyJsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -14,41 +16,23 @@ import java.util.Set;
 @EntityListeners(AuditingEntityListener.class)
 public class Experience {
 
-    @Column(name = "id")
+    @Column(name = "id_exp")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    private Integer idExp;
 
-    @Column(name="lib")
+    @Column(name = "lib")
     @Size(max = 11)
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private String lib;
 
-
-
-    @ManyToMany(mappedBy = "exp")
-    @JsonIgnore
-    private Set<Collaborateur> colb = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name = "besoin_competence",
-            joinColumns = @JoinColumn(name = "id_exp"),
-            inverseJoinColumns = @JoinColumn(name = "id_bsn"))
-    private List<Besoin> besoins;
-
-    public Experience() {}
-
-    public Experience(Integer id, String lib) {
-        this.id = id;
-        this.lib = lib;
-    }
-
     public Integer getId() {
-        return id;
+        return idExp;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.idExp = idExp;
     }
 
     public String getLib() {
@@ -59,19 +43,4 @@ public class Experience {
         this.lib = lib;
     }
 
-    public List<Besoin> getBesoins() {
-        return besoins;
-    }
-
-    public void setBesoins(List<Besoin> besoins) {
-        this.besoins = besoins;
-    }
-
-    public Set<Collaborateur> getColb() {
-        return colb;
-    }
-
-    public void setColb(Set<Collaborateur> colb) {
-        this.colb = colb;
-    }
 }

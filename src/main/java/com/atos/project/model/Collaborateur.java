@@ -1,86 +1,68 @@
 package com.atos.project.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.atos.project.view.MyJsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name="Collaborateur")
 @EntityListeners(AuditingEntityListener.class)
 public class Collaborateur {
     @Id
-    @Column(name="Id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @Column(name="id_clb")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    private Integer idClb;
 
     @NotBlank
     @Size(max = 100)
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private String nom;
 
     @NotBlank
     @Size(max = 100)
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private String prenom;
 
-    @NotBlank
     @Size(max = 50)
     @Email
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private String email;
 
     @NotBlank
     @Size(max = 50)
-    private String tel;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name = "collaborateur_competence",
-            joinColumns = @JoinColumn(name = "id_clb"),
-            inverseJoinColumns = @JoinColumn(name = "id_exp"))
-    private Set<Experience> exp = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name = "collaborateur_competence",
-            joinColumns = @JoinColumn(name = "id_clb"),
-            inverseJoinColumns = @JoinColumn(name = "id_cpc"))
-    private Set<Competence> competences = new HashSet<>();
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    private String matricule;
 
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_bsn")
+    @ManyToOne
+    @JoinColumn(name = "idAgc")
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private Agence agence;
 
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    private boolean f_dispo;
 
-    @OneToMany(mappedBy = "collaborateurList")
-    @JsonIgnore
-    private Set<Proposition> props = new HashSet<>();
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    private boolean f_actif;
 
+    @OneToMany(mappedBy="collaborateur",fetch=FetchType.LAZY,cascade=CascadeType.ALL, targetEntity = CollaborateurCompetence.class)
+    @JsonView({MyJsonView.Collaborateur.class})
+    private List<CollaborateurCompetence> listeCollaborateurCompetence = new ArrayList<>();
 
-    public Collaborateur() {}
-
-    public Collaborateur(Integer id, String nom, String prenom, String email, String tel) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-
-        this.email = email;
-        this.tel = tel;
-
+    public Integer getIdClb() {
+        return idClb;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdClb(Integer idClb) {
+        this.idClb = idClb;
     }
 
     public String getNom() {
@@ -107,12 +89,12 @@ public class Collaborateur {
         this.email = email;
     }
 
-    public String getTel() {
-        return tel;
+    public String getMatricule() {
+        return matricule;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public void setMatricule(String matricule) {
+        this.matricule = matricule;
     }
 
     public Agence getAgence() {
@@ -123,27 +105,27 @@ public class Collaborateur {
         this.agence = agence;
     }
 
-    public Set<Experience> getExp() {
-        return exp;
+    public boolean isF_dispo() {
+        return f_dispo;
     }
 
-    public void setExp(Set<Experience> exp) {
-        this.exp = exp;
+    public void setF_dispo(boolean f_dispo) {
+        this.f_dispo = f_dispo;
     }
 
-    public Set<Competence> getCompetences() {
-        return competences;
+    public boolean isF_actif() {
+        return f_actif;
     }
 
-    public void setCompetences(Set<Competence> competences) {
-        this.competences = competences;
+    public void setF_actif(boolean f_actif) {
+        this.f_actif = f_actif;
     }
 
-    public Set<Proposition> getProps() {
-        return props;
+    public List<CollaborateurCompetence> getListeCollaborateurCompetence() {
+        return listeCollaborateurCompetence;
     }
 
-    public void setProps(Set<Proposition> props) {
-        this.props = props;
+    public void setListeCollaborateurCompetence(List<CollaborateurCompetence> listeCollaborateurCompetence) {
+        this.listeCollaborateurCompetence = listeCollaborateurCompetence;
     }
 }

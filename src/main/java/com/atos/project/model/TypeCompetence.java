@@ -9,37 +9,34 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name="type_competence")
+@Table(name = "type_competence")
 @EntityListeners(AuditingEntityListener.class)
 public class TypeCompetence {
 
-    @Column(name = "id")
+    @Column(name = "id_tcp")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer idTcp;
 
-    @Column(name="lib")
+    @Column(name = "lib")
     @Size(max = 100)
     private String lib;
 
 
-    @OneToMany(mappedBy = "typeCompetence")
-    @JsonIgnore
-    private Set<Competence> cpc = new HashSet<>();
+    public TypeCompetence() {
+    }
 
-    public TypeCompetence() {}
-
-    public TypeCompetence(Integer id, String lib) {
-        this.id = id;
+    public TypeCompetence(Integer idTcp, String lib) {
+        this.idTcp = idTcp;
         this.lib = lib;
     }
 
     public Integer getId() {
-        return id;
+        return idTcp;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.idTcp = id;
     }
 
     public String getLib() {
@@ -48,13 +45,5 @@ public class TypeCompetence {
 
     public void setLib(String lib) {
         this.lib = lib;
-    }
-
-    public Set<Competence> getCpc() {
-        return cpc;
-    }
-
-    public void setCpc(Set<Competence> cpc) {
-        this.cpc = cpc;
     }
 }

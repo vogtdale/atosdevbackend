@@ -35,7 +35,7 @@ public class CompetenceController {
     /*******************************************************
      *                     Add Competence
      *******************************************************/
-    @PutMapping("/addCompetence")
+    @PutMapping("/addcomp")
     public Competence addcomp(@RequestBody Competence competences) {
         return this.competenceService.save(competences);
     }
@@ -44,7 +44,7 @@ public class CompetenceController {
      *                      Delete Competence
      *******************************************************/
 
-    @DeleteMapping("/competences/{id}")
+    @DeleteMapping("/delcomp/{id}")
     public void delete(@PathVariable int id) {
         this.competenceService.delete(id);
     }

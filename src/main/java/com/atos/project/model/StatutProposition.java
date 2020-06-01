@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @EntityListeners(AuditingEntityListener.class)
 public class StatutProposition {
 
-    @Column(name = "ID")
+    @Column(name = "id_spr")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

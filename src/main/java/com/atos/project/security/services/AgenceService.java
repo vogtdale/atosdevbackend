@@ -13,13 +13,12 @@ public class AgenceService {
     @Autowired
     AgenceRepository agenceRepository;
 
-    /*List Tous les agence*/
     public List<Agence> getAll() {
         return this.agenceRepository.findAll();
     }
 
-    public Agence addAgence(Agence cagence) {
-        return this.agenceRepository.save(cagence);
+    public Agence addAgence(Agence agence) {
+        return this.agenceRepository.save(agence);
     }
 
     public Agence findById(Integer id) {
@@ -30,8 +29,8 @@ public class AgenceService {
         return this.agenceRepository.findAll();
     }
 
-    public Agence save(Agence cagence) {
-        return this.agenceRepository.save(cagence);
+    public Agence save(Agence agence) {
+        return this.agenceRepository.save(agence);
     }
 
     public void delete(Integer id) {

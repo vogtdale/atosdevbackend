@@ -1,7 +1,9 @@
 package com.atos.project.model;
 
 
+import com.atos.project.view.MyJsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,77 +16,67 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name="Besoin")
+@Table(name = "Besoin")
 @EntityListeners(AuditingEntityListener.class)
 public class Besoin {
 
-    @Column(name = "Id")
+    @Column(name = "id_bsn")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name="d_debut")
+    @Column(name = "d_debut")
     @Temporal(TemporalType.DATE)
     Date d_debut;
 
-    @Column(name="intitule")
+    @Column(name = "intitule")
     @Size(max = 250)
     private String intitule;
 
-    @Column(name="d_echeance")
+    @Column(name = "d_echeance")
     @Temporal(TemporalType.DATE)
     Date d_echeance;
 
+    // Site
+    @ManyToOne
+    @JoinColumn(name = "idSit")
+    private Site site;
+
+    // Contact
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_ctc")
+    private ContactClient contactClient;
+
     @CreationTimestamp
-    @Column(name="ts")
+    @Column(name = "ts", nullable = false, updatable = false, insertable = false)
     private Date ts;
 
-    @Column(name="remarque")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_usr")
+    private User user;
+
+    @Column(name = "remarque")
     @Size(max = 1000)
     private String remarque;
 
+    @Column(name = "f_cloture")
+    private boolean fCloture;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name = "besoin_competence",
-            joinColumns = @JoinColumn(name = "id_bsn"),
-            inverseJoinColumns = @JoinColumn(name = "id_cpc"))
-    private Set<Competence> comp = new HashSet<>();
+    @Column(name = "f_recurent")
+    private boolean fRecurent;
 
-    @ManyToMany(mappedBy = "besoins",fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Experience> exp = new HashSet<>();
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    @JoinTable(name = "besoin_competence",
+//            joinColumns = @JoinColumn(name = "id_bsn"),
+//            inverseJoinColumns = @JoinColumn(name = "id_cpc"))
+//    private Set<Competence> comp = new HashSet<>();
+//
+//    @ManyToMany(mappedBy = "besoins")
+//    @JsonIgnore
+//    private Set<Experience> exp = new HashSet<>();
+//
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_site")
-    private Site site;
-
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_ctc")
-    private ContactClient contactClient;
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JsonIgnore
-    @JoinColumn(name="id_usr")
-    private User user;
-
-    @OneToMany(mappedBy = "besoinListe", fetch = FetchType.LAZY )
-    @JsonIgnore
-    private Set<Proposition> prop = new HashSet<>();
-
-    public Besoin() {}
-
-    public Besoin(Date d_debut, String intitule, Date d_echeance, Date ts, String remarque) {
-        this.d_debut = d_debut;
-        this.intitule = intitule;
-        this.d_echeance = d_echeance;
-        this.ts = ts;
-        this.remarque = remarque;
-
-    }
 
     public Integer getId() {
         return id;
@@ -118,30 +110,6 @@ public class Besoin {
         this.d_echeance = d_echeance;
     }
 
-    public Date getTs() {
-        return ts;
-    }
-
-    public void setTs(Date ts) {
-        this.ts = ts;
-    }
-
-    public String getRemarque() {
-        return remarque;
-    }
-
-    public void setRemarque(String remarque) {
-        this.remarque = remarque;
-    }
-
-    public Set<Competence> getCompetences() {
-        return comp;
-    }
-
-    public void setCompetences(Set<Competence> competences) {
-        this.comp = competences;
-    }
-
     public Site getSite() {
         return site;
     }
@@ -158,6 +126,14 @@ public class Besoin {
         this.contactClient = contactClient;
     }
 
+    public Date getTs() {
+        return ts;
+    }
+
+    public void setTs(Date ts) {
+        this.ts = ts;
+    }
+
     public User getUser() {
         return user;
     }
@@ -166,27 +142,27 @@ public class Besoin {
         this.user = user;
     }
 
-    public Set<Competence> getComp() {
-        return comp;
+    public String getRemarque() {
+        return remarque;
     }
 
-    public void setComp(Set<Competence> comp) {
-        this.comp = comp;
+    public void setRemarque(String remarque) {
+        this.remarque = remarque;
     }
 
-    public Set<Experience> getExp() {
-        return exp;
+    public boolean isfCloture() {
+        return fCloture;
     }
 
-    public void setExp(Set<Experience> exp) {
-        this.exp = exp;
+    public void setfCloture(boolean fCloture) {
+        this.fCloture = fCloture;
     }
 
-    public Set<Proposition> getProp() {
-        return prop;
+    public boolean isfRecurent() {
+        return fRecurent;
     }
 
-    public void setProp(Set<Proposition> prop) {
-        this.prop = prop;
+    public void setfRecurent(boolean fRecurent) {
+        this.fRecurent = fRecurent;
     }
 }
