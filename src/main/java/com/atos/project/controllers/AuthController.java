@@ -56,16 +56,26 @@ public class AuthController {
     private UserDetailsServiceImpl userDetailsService;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
         try {
-            authenticationManager.authenticate(
+            Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getUsername(), user.getPassword()));
+                            loginRequest.getUsername(), loginRequest.getPassword()));
 
-            final UserDetails userDetails = userDetailsService
-                    .loadUserByUsername(user.getUsername());
 
-            return ResponseEntity.ok(jwtUtils.generateJwtToken(userDetails));
+
+            final UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(item -> item.getAuthority())
+                    .collect(Collectors.toList());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = jwtUtils.generateJwtToken(userDetails);
+
+            return ResponseEntity.ok(new JwtResponse(jwt,
+                    userDetails.getId(),
+                    userDetails.getUsername(),
+                    userDetails.getEmail(),
+                    roles));
 
         }
         catch (BadCredentialsException e) {
