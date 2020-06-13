@@ -2,6 +2,8 @@ package com.atos.project.controllers;
 
 import com.atos.project.model.Besoin;
 import com.atos.project.security.services.BesoinService;
+import com.atos.project.view.MyJsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +22,13 @@ public class BesoinController {
      *                      List of Besoin
      *******************************************************/
     @GetMapping("/besoins")
+    @JsonView(MyJsonView.Besoin.class)
     public List<Besoin> showBesoin() {
         return this.besoinService.findAll();
     }
 
     @GetMapping("/besoins/{id}")
+    @JsonView(MyJsonView.Besoin.class)
     public Besoin getEvt(@PathVariable int id) {
         return (Besoin) this.besoinService.findById(id);
     }
@@ -34,6 +38,7 @@ public class BesoinController {
      *                     Add Besoin
      *******************************************************/
     @PutMapping("/addBesoin")
+    @JsonView(MyJsonView.Besoin.class)
     public Besoin addUsers(@RequestBody Besoin besoins) {
         return this.besoinService.save(besoins);
     }
@@ -43,6 +48,7 @@ public class BesoinController {
      *******************************************************/
 
     @DeleteMapping("/besoins/{id}")
+    @JsonView(MyJsonView.Besoin.class)
     public void delete(@PathVariable int id) {
         this.besoinService.delete(id);
     }

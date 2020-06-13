@@ -21,41 +21,41 @@ public class ContactClient {
     @Id
     @Column(name="id_ctc")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private Integer id;
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private String nom;
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private String prenom;
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private String poste;
 
     @Size(max = 100)
     @Email
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private String email;
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private String tel1;
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private String tel2;
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
     private String fax;
 
-    @ManyToOne  //(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="id_sit")
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class, MyJsonView.BesoinCompetence.class})
     private Site site;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
@@ -63,7 +63,7 @@ public class ContactClient {
             name = "contact_competence",
             joinColumns = @JoinColumn(name = "id_ctc"),
             inverseJoinColumns = @JoinColumn(name = "id_cpc"))
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.Contact.class})
     Set<Competence> listeCompetence;
 
     public Integer getId() {

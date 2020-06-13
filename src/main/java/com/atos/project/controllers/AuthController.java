@@ -19,6 +19,8 @@ import com.atos.project.repository.UserRepository;
 import com.atos.project.security.jwt.JwtUtils;
 import com.atos.project.security.services.UserDetailsImpl;
 import com.atos.project.security.services.UserDetailsServiceImpl;
+import com.atos.project.view.MyJsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

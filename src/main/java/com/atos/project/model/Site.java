@@ -20,36 +20,42 @@ public class Site {
     @Id
 //    @Column(name="id_sit")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class, MyJsonView.Contact.class})
     private Integer idSit;
 
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class, MyJsonView.Contact.class})
     private String lib;
 
     @Size(max = 100)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     private String adr;
 
     @Size(max = 100)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     @Column(name ="code_postal")
     private String codePostal;
 
     @Size(max = 100)
     @Email
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     private String email;
 
     @Size(max = 100)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     private String tel1;
 
     @Size(max = 100)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     private String tel2;
 
     @Size(max = 100)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     private String fax;
 
     @Size(max = 100)
-    @JsonView(MyJsonView.Contact.class)
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     private String ville;
 
     public Integer getIdSit() {

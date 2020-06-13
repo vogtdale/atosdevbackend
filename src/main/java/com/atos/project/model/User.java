@@ -1,6 +1,8 @@
 package com.atos.project.model;
 
+import com.atos.project.view.MyJsonView;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,19 +22,23 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView({MyJsonView.Utilisateur.class, MyJsonView.Besoin.class})
     private Long id;
 
     @NotBlank
     @Size(max = 20)
+    @JsonView(MyJsonView.Utilisateur.class)
     private String username;
 
     @NotBlank
     @Size(max = 50)
     @Email
+    @JsonView(MyJsonView.Utilisateur.class)
     private String email;
 
     @NotBlank
     @Size(max = 120)
+    @JsonView(MyJsonView.Utilisateur.class)
     private String password;
 
 
@@ -40,12 +46,13 @@ public class User {
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JsonView(MyJsonView.Utilisateur.class)
     private Set<Role> roles = new HashSet<>();
 
 
-
-//    @OneToMany(mappedBy = "user")
-//    private Set<Besoin> bsn = new HashSet<>();
+    /*@OneToMany(mappedBy = "user")
+    @JsonView({MyJsonView.Utilisateur.class, MyJsonView.Besoin.class})
+    private Set<Besoin> bsn = new HashSet<>();*/
 
     public User() {
     }

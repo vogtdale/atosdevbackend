@@ -12,10 +12,10 @@ import javax.persistence.*;
 public class Agence {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private int idAgc;
     @Column(unique = true)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private String lib;
 
     public Integer getId() {

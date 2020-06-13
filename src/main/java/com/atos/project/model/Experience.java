@@ -19,12 +19,22 @@ public class Experience {
     @Column(name = "id_exp")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({
+            MyJsonView.Experience.class,
+            MyJsonView.Collaborateur.class,
+            MyJsonView.CollaborateurCompetence.class,
+            MyJsonView.BesoinCompetence.class
+    })
     private Integer idExp;
 
     @Column(name = "lib")
     @Size(max = 11)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({
+            MyJsonView.Experience.class,
+            MyJsonView.Collaborateur.class,
+            MyJsonView.CollaborateurCompetence.class,
+            MyJsonView.BesoinCompetence.class
+    })
     private String lib;
 
     public Integer getId() {

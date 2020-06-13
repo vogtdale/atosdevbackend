@@ -40,6 +40,7 @@ public class ContactController {
      *                     Add ContactClient
      *******************************************************/
     @PutMapping("/addCtc")
+    @JsonView(MyJsonView.Contact.class)
     public ContactClient addContact(@RequestBody ContactClient contacts) {
         return this.contactService.save(contacts);
     }
@@ -49,6 +50,7 @@ public class ContactController {
      *******************************************************/
 
     @DeleteMapping("/delCtc/{id}")
+    @JsonView(MyJsonView.Contact.class)
     public void delete(@PathVariable int id) {
         this.contactService.delete(id);
     }

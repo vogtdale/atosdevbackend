@@ -18,16 +18,32 @@ import java.util.Set;
 public class Competence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Contact.class})
+    @JsonView({
+            MyJsonView.Competence.class,
+            MyJsonView.Collaborateur.class,
+            MyJsonView.CollaborateurCompetence.class,
+            MyJsonView.Contact.class,
+            MyJsonView.BesoinCompetence.class
+    })
     private int idCpc;
+
     @Column(unique = true)
-    @JsonView({MyJsonView.Collaborateur.class, MyJsonView.CollaborateurCompetence.class,MyJsonView.Contact.class})
+    @JsonView({
+            MyJsonView.Competence.class,
+            MyJsonView.Collaborateur.class,
+            MyJsonView.CollaborateurCompetence.class,
+            MyJsonView.Contact.class,
+            MyJsonView.BesoinCompetence.class
+    })
     private String lib;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idTcp")
+    @JsonView({MyJsonView.Competence.class, MyJsonView.BesoinCompetence.class})
     private TypeCompetence typeCompetence;
 
-    @ManyToMany(mappedBy = "listeCompetence")
+    @ManyToMany(mappedBy = "listeCompetence",cascade = CascadeType.ALL)
+    @JsonView({MyJsonView.Competence.class, MyJsonView.BesoinCompetence.class})
     Set<ContactClient> listeContactClient;
 //    @ManyToMany
 //    @JoinTable(

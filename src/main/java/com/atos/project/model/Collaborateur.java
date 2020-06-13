@@ -42,7 +42,7 @@ public class Collaborateur {
     private String matricule;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idAgc")
     @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
     private Agence agence;

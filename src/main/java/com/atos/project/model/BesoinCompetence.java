@@ -17,19 +17,20 @@ import java.io.Serializable;
 
 public class BesoinCompetence {
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idBsn", referencedColumnName = "id_bsn")
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.BesoinCompetence.class})
     private Besoin besoin;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idCpc", referencedColumnName = "idCpc")
-//    @JsonView({MyJsonView.Besoin.class,MyJsonView.BesoinCompetence.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.BesoinCompetence.class})
     private Competence competence;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idExp", referencedColumnName = "id_exp")
-//    @JsonView({MyJsonView.Besoin.class,MyJsonView.BesoinCompetence.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.BesoinCompetence.class})
     private Experience experience;
 
     public Competence getCompetence() {

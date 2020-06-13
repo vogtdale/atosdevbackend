@@ -1,5 +1,7 @@
 package com.atos.project.model;
 
+import com.atos.project.view.MyJsonView;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -13,12 +15,15 @@ public class StatutProposition {
     @Column(name = "id_spr")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class})
     private Integer id;
 
     @Size(max=100)
+    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class})
     private String lib;
 
     @Size(max=11)
+    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class})
     private int ordr;
 
     public StatutProposition() {}
