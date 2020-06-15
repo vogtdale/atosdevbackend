@@ -39,6 +39,7 @@ public class Besoin {
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
             MyJsonView.Client.class,
+            MyJsonView.Proposition.class,
 
     })
     Date d_debut;
@@ -49,6 +50,7 @@ public class Besoin {
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
             MyJsonView.Client.class,
+            MyJsonView.Proposition.class,
 
     })
     private String intitule;
@@ -59,6 +61,7 @@ public class Besoin {
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
             MyJsonView.Client.class,
+            MyJsonView.Proposition.class,
 
     })
     Date d_echeance;
@@ -69,6 +72,7 @@ public class Besoin {
     @JsonView({
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
+            MyJsonView.Proposition.class,
 
     })
     private Site site;
@@ -80,6 +84,7 @@ public class Besoin {
             MyJsonView.Besoin.class,
             MyJsonView.Contact.class,
             MyJsonView.BesoinCompetence.class,
+            MyJsonView.Proposition.class,
 
     })
     private ContactClient contactClient;
@@ -90,6 +95,7 @@ public class Besoin {
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
             MyJsonView.Client.class,
+            MyJsonView.Proposition.class,
 
     })
     private Date ts;
@@ -105,6 +111,7 @@ public class Besoin {
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
             MyJsonView.Client.class,
+            MyJsonView.Proposition.class,
 
     })
     private String remarque;
@@ -113,7 +120,8 @@ public class Besoin {
     @JsonView({
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
-            MyJsonView.Client.class
+            MyJsonView.Client.class,
+            MyJsonView.Proposition.class,
     })
     private boolean fCloture;
 
@@ -122,7 +130,8 @@ public class Besoin {
     @JsonView({
             MyJsonView.Besoin.class,
             MyJsonView.BesoinCompetence.class,
-            MyJsonView.Client.class
+            MyJsonView.Client.class,
+            MyJsonView.Proposition.class,
     })
     private boolean fRecurent;
 
@@ -214,7 +223,6 @@ public class Besoin {
     public void setfRecurent(boolean fRecurent) {
         this.fRecurent = fRecurent;
     }
-
 
 
 }

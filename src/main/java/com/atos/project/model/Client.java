@@ -52,6 +52,11 @@ public class Client {
     @JsonView({MyJsonView.Client.class, MyJsonView.SiteClient.class})
     private Besoin besoinClient;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name= "idprops")
+    @JsonView({MyJsonView.Client.class, MyJsonView.SiteClient.class, MyJsonView.Besoin.class})
+    private Proposition props;
+
     public Client() {}
 
     public Client(Integer idClient, String lib, String adr,  String codePostal,  String email, String tel1,  String fax,  String ville) {

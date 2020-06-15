@@ -18,38 +18,38 @@ public class Proposition {
     @Column(name = "id_pro")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="idBsn")
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class})
     private Besoin besoin;
 
     @Column(name="d_pro")
     @Temporal(TemporalType.DATE)
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private Date d_pro;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idClb")
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private Collaborateur collaborateur;
 
     @Column
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private float prixAchat;
 
     @Column
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private float prixVente;
 
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private float marge;
 
     @Column(name="d_relance")
     @Temporal(TemporalType.DATE)
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private Date d_relance;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -59,12 +59,12 @@ public class Proposition {
 
     @CreationTimestamp
     @Column(name="ts", nullable = false, updatable = false, insertable = false)
-    @JsonView(MyJsonView.Proposition.class)
+    @JsonView({MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private Date ts;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idSpr")
-    @JsonView({MyJsonView.Proposition.class})
+    @JsonView({MyJsonView.Proposition.class, MyJsonView.Besoin.class})
     private StatutProposition statut_prop;
 
     public Integer getId() {
@@ -154,4 +154,6 @@ public class Proposition {
     public void setStatut_prop(StatutProposition statut_prop) {
         this.statut_prop = statut_prop;
     }
+
+
 }

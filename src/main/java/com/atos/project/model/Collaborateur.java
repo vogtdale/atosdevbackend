@@ -18,39 +18,39 @@ public class Collaborateur {
     @Id
     @Column(name="id_clb")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class, MyJsonView.Proposition.class})
     private Integer idClb;
 
     @NotBlank
     @Size(max = 100)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private String nom;
 
     @NotBlank
     @Size(max = 100)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private String prenom;
 
     @Size(max = 50)
     @Email
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private String email;
 
     @NotBlank
     @Size(max = 50)
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private String Identifiant_Dass;
 
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idAgc")
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private Agence agence;
 
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private boolean f_dispo;
 
-    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private boolean f_actif;
 
     @OneToMany(mappedBy="collaborateur",fetch=FetchType.LAZY,cascade=CascadeType.ALL, targetEntity = CollaborateurCompetence.class)

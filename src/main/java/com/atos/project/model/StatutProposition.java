@@ -15,15 +15,15 @@ public class StatutProposition {
     @Column(name = "id_spr")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class})
+    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private Integer id;
 
     @Size(max=100)
-    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class})
+    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class,MyJsonView.Besoin.class})
     private String lib;
 
     @Size(max=11)
-    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class})
+    @JsonView({MyJsonView.Demarche.class,MyJsonView.Proposition.class, MyJsonView.Besoin.class})
     private int ordr;
 
     public StatutProposition() {}
