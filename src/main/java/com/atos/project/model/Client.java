@@ -1,75 +1,77 @@
 package com.atos.project.model;
 
 import com.atos.project.view.MyJsonView;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
-
 
 @Entity
-@Table(name="site")
+@Table(name = "Client")
 @EntityListeners(AuditingEntityListener.class)
-public class Site {
+public class Client {
     @Id
-//    @Column(name="id_sit")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class, MyJsonView.Contact.class})
-    private Integer idSit;
-
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class, MyJsonView.SiteClient.class})
+    private Integer idClient;
 
     @Size(max = 100)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class, MyJsonView.Contact.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class, MyJsonView.SiteClient.class})
     private String lib;
 
     @Size(max = 100)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class,MyJsonView.SiteClient.class})
     private String adr;
 
     @Size(max = 100)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
     @Column(name ="code_postal")
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class, MyJsonView.SiteClient.class})
     private String codePostal;
 
     @Size(max = 100)
     @Email
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class, MyJsonView.SiteClient.class})
     private String email;
 
     @Size(max = 100)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class, MyJsonView.SiteClient.class})
     private String tel1;
 
     @Size(max = 100)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
-    private String tel2;
-
-    @Size(max = 100)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class,MyJsonView.SiteClient.class})
     private String fax;
 
     @Size(max = 100)
-    @JsonView({MyJsonView.SiteClient.class,MyJsonView.Besoin.class})
+    @JsonView({MyJsonView.Besoin.class,MyJsonView.Client.class,MyJsonView.SiteClient.class})
     private String ville;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idclient")
-    @JsonView({MyJsonView.Client.class,MyJsonView.Besoin.class, MyJsonView.SiteClient.class})
-    private Client clientSite;
+    @JoinColumn(name= "idbsn")
+    @JsonView({MyJsonView.Client.class, MyJsonView.SiteClient.class})
+    private Besoin besoinClient;
 
-    public Integer getIdSit() {
-        return idSit;
+    public Client() {}
+
+    public Client(Integer idClient, String lib, String adr,  String codePostal,  String email, String tel1,  String fax,  String ville) {
+        this.idClient = idClient;
+        this.lib = lib;
+        this.adr = adr;
+        this.codePostal = codePostal;
+        this.email = email;
+        this.tel1 = tel1;
+        this.fax = fax;
+        this.ville = ville;
     }
 
-    public void setIdSit(Integer idSit) {
-        this.idSit = idSit;
+
+    public Integer getIdClient() {
+        return idClient;
+    }
+
+    public void setIdClient(Integer idClient) {
+        this.idClient = idClient;
     }
 
     public String getLib() {
@@ -112,14 +114,6 @@ public class Site {
         this.tel1 = tel1;
     }
 
-    public String getTel2() {
-        return tel2;
-    }
-
-    public void setTel2(String tel2) {
-        this.tel2 = tel2;
-    }
-
     public String getFax() {
         return fax;
     }
@@ -136,11 +130,12 @@ public class Site {
         this.ville = ville;
     }
 
-    public Client getClientSite() {
-        return clientSite;
+
+    public Besoin getBesoinClient() {
+        return besoinClient;
     }
 
-    public void setClientSite(Client clientSite) {
-        this.clientSite = clientSite;
+    public void setBesoinClient(Besoin besoinClient) {
+        this.besoinClient = besoinClient;
     }
 }

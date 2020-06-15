@@ -39,7 +39,7 @@ public class Collaborateur {
     @NotBlank
     @Size(max = 50)
     @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class})
-    private String matricule;
+    private String Identifiant_Dass;
 
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -89,12 +89,12 @@ public class Collaborateur {
         this.email = email;
     }
 
-    public String getMatricule() {
-        return matricule;
+    public String getIdentifiant_Dass() {
+        return Identifiant_Dass;
     }
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
+    public void setIdentifiant_Dass(String identifiant_Dass) {
+        Identifiant_Dass = identifiant_Dass;
     }
 
     public Agence getAgence() {

@@ -47,9 +47,9 @@ public class BesoinController {
      *                      Delete Besoin
      *******************************************************/
 
-    @DeleteMapping("/besoins/{id}")
+    @DeleteMapping("/besoins/{id_bsn}")
     @JsonView(MyJsonView.Besoin.class)
-    public void delete(@PathVariable int id) {
-        this.besoinService.delete(id);
+    public void delete(@PathVariable Integer id_bsn) {
+        this.besoinService.delete(id_bsn);
     }
 }

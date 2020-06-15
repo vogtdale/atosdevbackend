@@ -26,40 +26,72 @@ public class Besoin {
     @JsonView({
             MyJsonView.Besoin.class,
             MyJsonView.Proposition.class,
-            MyJsonView.BesoinCompetence.class
-    })
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class,
 
+
+    })
     private Integer id;
+
     @Column(name = "d_debut")
     @Temporal(TemporalType.DATE)
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class,
+
+    })
     Date d_debut;
 
     @Column(name = "intitule")
     @Size(max = 250)
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class,
+
+    })
     private String intitule;
 
     @Column(name = "d_echeance")
     @Temporal(TemporalType.DATE)
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class,
+
+    })
     Date d_echeance;
 
     // Site
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idSit")
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+
+    })
     private Site site;
 
     // Contact
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_ctc")
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.Contact.class, MyJsonView.BesoinCompetence.class })
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.Contact.class,
+            MyJsonView.BesoinCompetence.class,
+
+    })
     private ContactClient contactClient;
 
     @CreationTimestamp
     @Column(name = "ts")
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class,
+
+    })
     private Date ts;
 
     /*@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -69,28 +101,30 @@ public class Besoin {
 
     @Column(name = "remarque")
     @Size(max = 1000)
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class,
+
+    })
     private String remarque;
 
     @Column(name = "f_cloture")
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class
+    })
     private boolean fCloture;
 
-    @Column(name = "f_recurent")
-    @JsonView({MyJsonView.Besoin.class, MyJsonView.BesoinCompetence.class})
-    private boolean fRecurent;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JsonIgnore
-//    @JoinTable(name = "besoin_competence",
-//            joinColumns = @JoinColumn(name = "id_bsn"),
-//            inverseJoinColumns = @JoinColumn(name = "id_cpc"))
-//    private Set<Competence> comp = new HashSet<>();
-//
-//    @ManyToMany(mappedBy = "besoins")
-//    @JsonIgnore
-//    private Set<Experience> exp = new HashSet<>();
-//
+    @Column(name = "f_recurent")
+    @JsonView({
+            MyJsonView.Besoin.class,
+            MyJsonView.BesoinCompetence.class,
+            MyJsonView.Client.class
+    })
+    private boolean fRecurent;
 
 
     public Integer getId() {
@@ -180,6 +214,7 @@ public class Besoin {
     public void setfRecurent(boolean fRecurent) {
         this.fRecurent = fRecurent;
     }
+
 
 
 }

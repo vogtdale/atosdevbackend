@@ -16,4 +16,5 @@ public class MyJsonView {
     public static class Competence{};
     public static class Experience{};
 
+
 }
