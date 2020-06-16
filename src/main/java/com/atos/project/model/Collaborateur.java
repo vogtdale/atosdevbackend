@@ -51,6 +51,12 @@ public class Collaborateur {
     private boolean f_dispo;
 
     @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
+    private float bench;
+
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
+    private String tel;
+
+    @JsonView({MyJsonView.Collaborateur.class,MyJsonView.CollaborateurCompetence.class,MyJsonView.Proposition.class})
     private boolean f_actif;
 
     @OneToMany(mappedBy="collaborateur",fetch=FetchType.LAZY,cascade=CascadeType.ALL, targetEntity = CollaborateurCompetence.class)
@@ -121,6 +127,22 @@ public class Collaborateur {
         this.f_actif = f_actif;
     }
 
+    public float getBench() {
+        return bench;
+    }
+
+    public void setBench(float bench) {
+        this.bench = bench;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
     public List<CollaborateurCompetence> getListeCollaborateurCompetence() {
         return listeCollaborateurCompetence;
     }
@@ -128,4 +150,6 @@ public class Collaborateur {
     public void setListeCollaborateurCompetence(List<CollaborateurCompetence> listeCollaborateurCompetence) {
         this.listeCollaborateurCompetence = listeCollaborateurCompetence;
     }
+
+
 }
