@@ -21,15 +21,21 @@ public class AgenceController {
         this.agenceService = agenceService;
     }
 
-    /*******************************************************
-     *                      List of Agence
-     *******************************************************/
+    /**
+     * Api Endpoint GET List of Agence
+     * @return
+     */
     @GetMapping("/agence")
     @JsonView(MyJsonView.SiteClient.class)
     public List<Agence> showAgence() {
         return this.agenceService.findAll();
     }
 
+    /**
+     * Api EndPoint GET Agence par son attribut id
+     * @param id
+     * @return
+     */
     @GetMapping("/agence/{id}")
     @JsonView(MyJsonView.SiteClient.class)
     public Agence getAgence(@PathVariable int id) {
@@ -37,17 +43,20 @@ public class AgenceController {
     }
 
 
-    /*******************************************************
-     *                     Add Agence
-     *******************************************************/
+    /**
+     * Api Endpoit pour Ajouter Un Agence
+     * @param id
+     * @return
+     */
     @PutMapping("/addAgence")
     @JsonView(MyJsonView.SiteClient.class)
     public Agence putAgence(@RequestBody Agence id) { return this.agenceService.save(id);   }
 
-    /******************************************************
-     *                      Delete Agence
-     *******************************************************/
 
+    /**
+     * Api Endpoit pour faire un deletde d'Un Agence par son attribut id
+     * @param id
+     */
     @DeleteMapping("/agence/{id}")
     @JsonView(MyJsonView.SiteClient.class)
     public void delete(@PathVariable int id) {
